@@ -1,0 +1,95 @@
+# Public Key Cryptography
+
+## 1. Asymmetric Encryption Overview
+
+Uses two keys:
+- Public Key → shared openly
+- Private Key → kept secret
+
+Use cases:
+- Secure communication
+- Key exchange
+- Digital signatures
+
+---
+
+## 2. RSA (Rivest-Shamir-Adleman)
+
+- Based on large prime numbers
+- Uses modulo arithmetic
+
+Process:
+1. Generate public & private keys
+2. Encrypt with public key
+3. Decrypt with private key
+
+Used in:
+- HTTPS
+- Secure communication
+
+---
+
+## 3. Diffie-Hellman Key Exchange
+
+- Used to securely share keys over insecure channel
+- No direct transmission of secret key
+
+Process:
+- Both parties generate shared secret independently
+
+Used in:
+- TLS
+- VPNs
+
+---
+
+## 4. SSH (Secure Shell)
+
+- Secure remote login protocol
+- Uses encryption + key exchange
+
+Features:
+- Encrypted communication
+- Authentication via password or keys
+
+---
+
+## 5. Digital Signatures
+
+Used for:
+- Authentication
+- Integrity
+
+Process:
+1. Hash data
+2. Encrypt hash with private key
+3. Receiver verifies using public key
+
+---
+
+## 6. Certificates
+
+- Issued by Certificate Authority (CA)
+- Bind identity with public key
+
+Used in:
+- HTTPS (SSL/TLS)
+
+---
+
+## 7. PGP / GPG
+
+- Used for secure email and file encryption
+- Combines:
+  - Symmetric encryption (fast)
+  - Asymmetric encryption (key exchange)
+
+---
+
+## 8. Key Takeaways
+
+- Public key crypto solves key distribution problem
+- RSA = encryption
+- Diffie-Hellman = key exchange
+- Signatures = trust + integrity
+- Certificates = identity verification
