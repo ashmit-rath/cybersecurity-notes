@@ -1,0 +1,272 @@
+# 🔐 Hashing & John the Ripper (JtR) – Practical Notes
+
+## 1. Hashing Basics
+
+- Hashing = one-way function → input → fixed-length output
+- Deterministic: same input → same hash
+- Avalanche effect: small change → completely different hash
+- Not reversible (unlike encryption)
+
+---
+
+## 2. Generate Hashes (CLI)
+
+### MD5
+```bash
+echo -n "password" | md5sum
+```
+
+### SHA1
+```bash
+echo -n "password" | sha1sum
+```
+
+### SHA256
+```bash
+echo -n "password" | sha256sum
+```
+
+### SHA512
+```bash
+echo -n "password" | sha512sum
+```
+
+### File Hash
+```bash
+md5sum file.txt
+sha256sum file.txt
+```
+
+---
+
+## 3. Hash Identification
+
+### hashid
+```bash
+hashid hash.txt
+```
+
+### hash-id.py
+```bash
+python3 hash-id.py <hash>
+```
+
+> Always verify manually (length + pattern)
+
+---
+
+## 4. Common Hash Lengths
+
+| Type      | Length |
+|-----------|--------|
+| MD5       | 32     |
+| SHA1      | 40     |
+| SHA256    | 64     |
+| SHA512    | 128    |
+| Whirlpool | 128    |
+| NTLM      | 32     |
+
+---
+
+## 5. John the Ripper (JtR)
+
+### Basic Syntax
+```bash
+john [options] hashfile
+```
+
+---
+
+## 6. Basic Usage
+
+```bash
+john hash.txt
+```
+
+---
+
+## 7. Specify Format
+
+```bash
+john --format=<type> hash.txt
+```
+
+### Examples
+```bash
+john --format=raw-md5 hash.txt
+john --format=raw-sha256 hash.txt
+john --format=whirlpool hash.txt
+john --format=nt hash.txt
+```
+
+---
+
+## 8. Wordlist Attack
+
+```bash
+john --wordlist=<wordlist> hash.txt
+```
+
+### Example
+```bash
+john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
+```
+
+---
+
+## 9. Format + Wordlist
+
+```bash
+john --format=raw-md5 --wordlist=rockyou.txt hash.txt
+```
+
+---
+
+## 10. Show Cracked Passwords
+
+```bash
+john --show hash.txt
+```
+
+---
+
+## 11. Incremental Mode (Brute Force)
+
+```bash
+john --incremental hash.txt
+```
+
+---
+
+## 12. Single Crack Mode
+
+```bash
+john --single hash.txt
+```
+
+---
+
+## 13. Rules (Word Mutation)
+
+```bash
+john --wordlist=rockyou.txt --rules hash.txt
+```
+
+---
+
+## 14. Reset Session
+
+```bash
+rm ~/.john/john.pot
+```
+
+---
+
+## 15. Linux Password Cracking
+
+```bash
+unshadow passwd.txt shadow.txt > combined.txt
+john combined.txt
+```
+
+---
+
+## 16. Windows Hash (NTLM)
+
+```bash
+john --format=nt hash.txt
+```
+
+---
+
+## 17. ZIP Password Crack
+
+```bash
+zip2john file.zip > zip.hash
+john zip.hash --wordlist=rockyou.txt
+```
+
+---
+
+## 18. RAR Password Crack
+
+```bash
+rar2john file.rar > rar.hash
+john rar.hash --wordlist=rockyou.txt
+```
+
+---
+
+## 19. SSH Key Crack
+
+```bash
+ssh2john id_rsa > ssh.hash
+john ssh.hash --wordlist=rockyou.txt
+```
+
+---
+
+## 20. Hashcat (Quick Reference)
+
+### Syntax
+```bash
+hashcat -m <mode> -a <attack> hash.txt wordlist.txt
+```
+
+### Examples
+
+#### MD5
+```bash
+hashcat -m 0 -a 0 hash.txt rockyou.txt
+```
+
+#### SHA256
+```bash
+hashcat -m 1400 -a 0 hash.txt rockyou.txt
+```
+
+#### NTLM
+```bash
+hashcat -m 1000 -a 0 hash.txt rockyou.txt
+```
+
+#### Whirlpool
+```bash
+hashcat -m 6100 -a 0 hash.txt rockyou.txt
+```
+
+---
+
+## 21. Encoding vs Hashing vs Encryption
+
+| Feature     | Hashing        | Encoding       | Encryption      |
+|------------|----------------|----------------|-----------------|
+| Reversible | ❌ No           | ✅ Yes          | ✅ Yes           |
+| Purpose    | Integrity      | Format change  | Confidentiality |
+| Key Used   | ❌ No           | ❌ No           | ✅ Yes           |
+
+---
+
+## 22. Base64 Encoding
+
+### Encode
+```bash
+echo -n "hello" | base64
+```
+
+### Decode
+```bash
+echo "aGVsbG8=" | base64 -d
+```
+
+---
+
+## 23. Practical Notes
+
+- Hash cracking = guessing + computation
+- Correct format selection = critical
+- Wordlist quality > tool choice
+- Strong hashes ≠ easily crackable
+- GPU (hashcat) >> CPU (john)
+
+---
